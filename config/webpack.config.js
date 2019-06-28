@@ -268,6 +268,7 @@ module.exports = function (webpackEnv) {
         .map(ext => `.${ext}`)
         .filter(ext => useTypeScript || !ext.includes('ts')),
       alias: {
+        '@': path.resolve('src'),
         // Support React Native Web
         // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
         'react-native': 'react-native-web',
@@ -337,21 +338,19 @@ module.exports = function (webpackEnv) {
               include: paths.appSrc,
               loader: require.resolve('babel-loader'),
               options: {
-                customize: require.resolve(
-                  'babel-preset-react-app/webpack-overrides',
-                ),
-
-                plugins: [
+                presets:[
                   [
-                    require.resolve('babel-plugin-named-asset-import'),
+                    require.resolve('@babel/preset-env'),
                     {
-                      loaderMap: {
-                        svg: {
-                          ReactComponent: '@svgr/webpack?-svgo,+ref![path]',
-                        },
-                      },
+                      targets: { browsers: ['last 2 versions'] },
+                      useBuiltIns: 'usage',
+                      corejs: 2,
                     },
                   ],
+                  require.resolve('@babel/preset-react'),
+                ],
+                plugins: [
+               
                 ],
                 // This is a feature of `babel-loader` for webpack (not Babel itself).
                 // It enables caching results in ./node_modules/.cache/babel-loader/

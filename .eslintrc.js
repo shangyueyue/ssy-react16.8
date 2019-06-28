@@ -1,4 +1,5 @@
 module.exports = {
+    "parser": "babel-eslint"   
     "env": {
         "browser": true,
         "es6": true,
@@ -20,5 +21,8 @@ module.exports = {
         "react"
     ],
     "rules": {
+        "react/destructuring-assignment": 0,
+        "react/jsx-filename-extension": 0,
+        "react/prop-types": 0,
     }
 };
